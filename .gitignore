@@ -1,3 +1,13 @@
+# Generated JSON Folder
+json/
+
+# Compiled Files
+*.js
+
+# Config
+config.ts
+config.js
+
 # Logs
 logs
 *.log
