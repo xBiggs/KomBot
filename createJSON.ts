@@ -8,7 +8,7 @@ const inputFile: string = "KomBot MK9 Framedata.xlsx";
 const result = excelToJSON({
     sourceFile: inputFile,
     header: {
-        rows: 1 
+        rows: 1
     },
     columnToKey: {
        '*': '{{columnHeader}}'
@@ -32,9 +32,9 @@ function toString(o: any): any {
       if (typeof o[k] === 'object') {
         return toString(o[k]);
       }
-      
+
       o[k] = '' + o[k];
     });
-    
+
     return o;
   }

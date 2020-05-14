@@ -21,7 +21,7 @@ Client.on('message', message => {
     // Checks to see if PREFIX appears as the first word
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
-    // Removes PREFIX from commmand input argument
+    // Removes PREFIX from command input argument
     const args: string[] = message.content.slice(PREFIX.length).split(/ +/);
     const commands: string[] = args.map(element => element.toLowerCase());
     console.log(commands);
@@ -46,18 +46,18 @@ Client.on('message', message => {
             case 'selector':
                 message.channel.send(selectorEmbed);
             break;
-    
+
             case 'help':
                 message.channel.send(helpEmbed);
             break;
-    
+
             // TE Commands
             case 'te':
-                if (!commands[1]) return; 
+                if (!commands[1]) return;
                 message.channel.send(teCommandEmbed);
                 // TE Characters
             break;
-    
+
             default:
                 message.channel.send(mk9ErrorEmbed);
             break;
