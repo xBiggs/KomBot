@@ -8,7 +8,7 @@ export class Character {
 
     constructor(name: string) {
         this.name = name;
-        const filename: string = name.split(' ').join('').split('-').join('').toLowerCase(); 
+        const filename: string = name.split(' ').join('').split('-').join('').toLowerCase();
         this.framedata = require(`../json/${filename}.json`);
     }
 
