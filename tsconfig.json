@@ -1,7 +1,12 @@
 {
-    "compilerOptions" : {
-        "target": "ES6",
-        "module": "commonjs",
-        "removeComments": true
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ESNext"
+  },
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "module": "NodeNext",
     }
+  }
 }

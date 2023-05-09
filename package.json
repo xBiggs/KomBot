@@ -1,7 +1,8 @@
 {
   "name": "kombot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "An MK9 Frame Data Discord Bot",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,20 +11,22 @@
     "type": "git",
     "url": "git+https://github.com/xBiggs/KomBot.git"
   },
-  "author": "Biggs",
-  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/xBiggs/KomBot/issues"
   },
   "homepage": "https://github.com/xBiggs/KomBot#readme",
-  "dependencies": {
-    "convert-excel-to-json": "^1.6.1",
-    "discord.js": "^12.1.1",
-    "g": "^2.0.1",
-    "jsonfile": "^6.0.1",
-    "tslint": "^6.1.0"
-  },
+  "author": "xBiggs",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.13.6"
+    "@types/convert-excel-to-json": "^1.7.1",
+    "@types/node": "^20.1.1",
+    "convert-excel-to-json": "^1.7.0",
+    "prisma": "^4.13.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.0.3"
   }
 }
