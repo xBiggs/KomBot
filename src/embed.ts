@@ -42,20 +42,24 @@ export const FrameDataEmbed = async (fighter: string, command: string) => {
 }
 
 export const CommandsEmbed = async (fighter: string) => {
-  const query = await prisma.framedata.findMany({
-    where: {
-      fighter,
-    },
-    select: {
-      command: true,
-    },
-  });
-  let commands = '';
-  query.map(element => commands += ' `' + element.command + '`');
-  return new EmbedBuilder()
-    .setColor(0xE74C3C)
-    .setTitle(`MK9 ${fighter} Commands`)
-    .setDescription(commands);
+  try {
+    const query = await prisma.framedata.findMany({
+      where: {
+        fighter,
+      },
+      select: {
+        command: true,
+      },
+    });
+    let commands = '';
+    query.map(element => commands += ' `' + element.command + '`');
+    return new EmbedBuilder()
+      .setColor(0xE74C3C)
+      .setTitle(`MK9 ${fighter} Commands`)
+      .setDescription(commands);
+  } catch (e) {
+    console.error((e as Error).message);
+  }
 }
 
 export const SelectorEmbed = new EmbedBuilder()

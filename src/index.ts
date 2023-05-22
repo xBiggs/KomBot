@@ -25,7 +25,7 @@ client.on('messageCreate', async (message) => {
 
   const character = Alias.get(commands.at(0) ?? '');
   const command = commands.at(1);
-  if (character) (!command) ? message.channel.send({embeds: [await CommandsEmbed(character)]}) : message.channel.send({embeds: [await FrameDataEmbed(character, command ?? '')]});
+  if (character) (!command) ? message.channel.send({embeds: [await CommandsEmbed(character) ?? MK9ErrorEmbed]}) : message.channel.send({embeds: [await FrameDataEmbed(character, command ?? '')]});
   else switch(commands[0]) {
     case 'selector': {
       message.channel.send({embeds: [SelectorEmbed]});
