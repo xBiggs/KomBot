@@ -25,8 +25,8 @@ psql -U <USERNAME> -d <DBNAME> < ./prisma/database.sql
 ## Build
 ```shell
 npm install &&\
-npx run build &&\
-npx run start
+npm run build &&\
+npm run start
 ```
 
 ## Deploy systemd Service
