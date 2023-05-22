@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model framedata {
+  id          Int     @id @default(autoincrement())
+  fighter     String
+  command     String
+  name        String? @default("~")
+  execution   String? @default("~")
+  startup     String? @default("~")
+  level       String? @default("~")
+  block       String? @default("~")
+  hit         String? @default("~")
+  blockcancel String? @default("~")
+  hitcancel   String? @default("~")
+  notes       String? @default("~")
+  image       String? @default("~")
+
+  @@unique([fighter, command])
+}

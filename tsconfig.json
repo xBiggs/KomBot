@@ -1,7 +1,18 @@
 {
-    "compilerOptions" : {
-        "target": "ES6",
-        "module": "commonjs",
-        "removeComments": true
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ESNext",
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "removeComments": true,
+    "outDir": "build",
+    "rootDir": "src",
+  },
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "module": "NodeNext",
     }
+  }
 }
