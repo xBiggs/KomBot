@@ -1,46 +1,41 @@
-import 'dotenv/config';
 import { Client, Events, GatewayIntentBits } from 'discord.js';
+import { Type } from '@sinclair/typebox';
+import { Value } from '@sinclair/typebox/value';
 
-import { CommandsEmbed, FrameDataEmbed, HelpEmbed, MK9ErrorEmbed, SelectorEmbed, TECommandEmbed } from './embed.js';
-import { Alias } from './alias.js';
+import { Embed } from './embed';
+import { Alias } from './kombot';
 
-if (!process.env.TOKEN) throw Error('Missing TOKEN enviroment variable.');
-if (!process.env.PREFIX) throw Error('Missing PREFIX enviroment variable.');
-const prefix = process.env.PREFIX;
-
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+const EnviromentSchema = Type.Object({
+  TOKEN: Type.Readonly(Type.String()),
+  PREFIX: Type.Readonly(Type.String()),
 });
 
-client.once(Events.ClientReady, c => console.log(`Ready! Logged in as ${c.user.tag}`));
+const env = Value.Check(EnviromentSchema, process.env) ? process.env : (() => {throw Error('EnviromentSchema Validation Failed.')})();
 
-client.on('messageCreate', async (message) => {
-  if (!message.content.startsWith(prefix)) return;
-  const commands = message.content.replace(prefix, '').trimEnd().split(' ').filter((command => command !== ''));
-  if (commands.length <= 0) return;
-
-  const character = Alias.get(commands.at(0) ?? '');
-  const command = commands.at(1);
-  if (character) (!command) ? message.channel.send({embeds: [await CommandsEmbed(character) ?? MK9ErrorEmbed]}) : message.channel.send({embeds: [await FrameDataEmbed(character, command ?? '')]});
-  else switch(commands[0]) {
-    case 'selector': {
-      message.channel.send({embeds: [SelectorEmbed]});
-    } break;
-    case 'help': {
-      message.channel.send({embeds: [HelpEmbed]});
-    } break;
-    case 'te': {
-      if (!commands.at(1)) return;
-      message.channel.send({embeds: [TECommandEmbed]});
-    } break;
-    default: {
-      message.channel.send({embeds: [MK9ErrorEmbed]});
-    } break;
-  }
-});
-
-client.login(process.env.TOKEN);
+try {
+  const discord = new Client({
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+    ],
+  } as const);
+  discord.once(Events.ClientReady, client => console.log(`Ready! Logged in as ${client.user.tag}`));
+  discord.on('messageCreate', (message) => {
+    if (!message.content.startsWith(env.PREFIX)) return;
+    const commands = message.content.toLowerCase().replace(env.PREFIX, '').trimEnd().split(' ').filter((command => command !== ''));
+    if (commands.length <= 0) return;
+    const character = Alias.get(commands.at(0) ?? '');
+    const command = commands.at(1);
+    if (character) message.channel.send({embeds: [(!command) ? Embed.Commands(character) : Embed.FrameData(character, command ?? '')]});
+    else switch(commands[0]) {
+      case 'selector': { message.channel.send({embeds: [Embed.Selector]}); } break;
+      case 'help': { message.channel.send({embeds: [Embed.Help]}); } break;
+      case 'te': { message.channel.send({embeds: [Embed.TECommand]}); } break;
+      default: { message.channel.send({embeds: [Embed.MK9Error]}); } break;
+    }
+  });
+  discord.login(env.TOKEN);
+} catch(e) {
+  console.error(e);
+}

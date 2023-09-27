@@ -1,0 +1,16 @@
+[Unit]
+Description="kombot"
+
+[Service]
+ExecStartPre=/bin/bash -c '! /usr/bin/systemctl is-active --quiet kombot.service'
+ExecStart=/home/biggs/.bun/bin/bun /home/biggs/kombot/src/index.ts
+Restart=always
+RestartSec=10
+StandardError=syslog
+SyslogIdentifier=kombot-bun
+Enviroment="PATH=/home/biggs/.bun/bin/bun"
+Enviroment="NODE_ENV=production"
+WorkingDirectory=/home/biggs/kombot
+
+[Install]
+WantedBy=multi-user.target
