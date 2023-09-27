@@ -1,56 +1,50 @@
 ![](./assets/logo.png)
 
 # KomBot
-An MK9 Frame Data Discord Bot.
+A TypeScript MK9 Frame Data discord.js Bot.
 
 ## Configuration
-Create a .env file in the root directory with the following:
+Create a `.env` file in the root directory with the following:
 
-```bash
+```ts
 # .env
-DATABASE_URL=""
-TOKEN=""
-PREFIX=""
+TOKEN = ""
+PREFIX = ""
 ```
 
 ## Installation Requirements
-- [PostgreSQL](https://www.postgresql.org/download/)
-- [NodeJS](https://nodejs.org/)
-
-## Database
-```shell
-psql -U <USERNAME> -d <DBNAME> < ./prisma/database.sql
-```
+- [Bun](https://bun.sh/)
+- [SQLite](https://www.sqlite.org/)
 
 ## Build
 ```shell
-npm install &&\
-npm run build &&\
-npm run start
+bun install
+bun .
 ```
 
 ## Deploy systemd Service
 
 ```
 [Unit]
-Description="KomBot"
+Description="kombot"
 
 [Service]
-ExecStart=<PATH_TO_NODE> <PATH_TO_INDEX_JS>
+ExecStartPre=/bin/bash -c '! /usr/bin/systemctl is-active --quiet kombot.service'
+ExecStart=<PATH_TO_BUN> <PATH_TO_INDEX.TS>
 Restart=always
 RestartSec=10
 StandardError=syslog
-SyslogIdentifier=KomBot-nodejs
-Enviroment="PATH=<PATH_TO_NODE>"
+SyslogIdentifier=kombot-bun
+Enviroment="PATH=<PATH_TO_BUN>"
 Enviroment="NODE_ENV=production"
-WorkingDirectory=<PATH_TO_GITHUB_REPO>
+WorkingDirectory=<PROJECT_DIRECTORY>
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-Replace contents of `KomBot.service` with your host's path information.
+Replace contents of `kombot.service` with your host's path information.
 
 Create a symbolic link to `systemd`:
 
-`$ ln -s <PATH_TO_KomBot.service> /etc/systemd/system/KomBot.service`
+`$sudo ln -s <PATH_TO_kombot.service> /etc/systemd/system/kombot.service`

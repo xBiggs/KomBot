@@ -1,18 +1,33 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "target": "ESNext",
+    "lib": ["ESNext"],
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "strict": true,
-    "allowUnreachableCode": false,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "types": [
+      "bun-types" // add Bun global
+    ],
     "allowUnusedLabels": false,
-    "removeComments": true,
-    "outDir": "build",
-    "rootDir": "src",
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "checkJs": true
   },
-  "ts-node": {
-    "esm": true,
-    "compilerOptions": {
-      "module": "NodeNext",
-    }
-  }
+  "include": ["src/**/*"]
 }
